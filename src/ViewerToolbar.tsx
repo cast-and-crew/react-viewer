@@ -28,12 +28,12 @@ export const defaultToolbars: ToolbarConfig[] = [
    actionType: ActionType.zoomOut,
  },
  {
-   key: 'prev',
-   actionType: ActionType.prev,
- },
- {
    key: 'reset',
    actionType: ActionType.reset,
+ },
+ {
+   key: 'prev',
+   actionType: ActionType.prev,
  },
  {
    key: 'next',
