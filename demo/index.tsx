@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import Viewer from '../src/Viewer';
 const img2 = require('./images/landscape2.jpg');
 const img = require('./images/landscape.jpg');
@@ -16,6 +16,8 @@ interface State {
   activeIndex: number;
   mode: 'modal' | 'inline';
 }
+
+const root = createRoot(document.getElementById("root"));
 
 class App extends React.Component<any, Partial<State>> {
   container: HTMLDivElement;
@@ -152,7 +154,4 @@ class App extends React.Component<any, Partial<State>> {
   }
 }
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('root')
-);
+root.render(<App />);

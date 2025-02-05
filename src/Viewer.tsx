@@ -1,86 +1,85 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import { createPortal } from 'react-dom';
 import ViewerCore from './ViewerCore';
 import ViewerProps from './ViewerProps';
 
-export default class Viewer extends React.Component<ViewerProps, any> {
+interface ViewerState {
+  container: HTMLElement | null;
+  component: React.ReactNode | null;
+}
+
+export default class Viewer extends React.Component<ViewerProps, ViewerState> {
   private defaultContainer: HTMLElement;
-  private container: HTMLElement;
-  private component: React.ReactNode;
 
-  constructor() {
-    super();
+  constructor(props: ViewerProps) {
+    super(props);
 
-    this.container = null;
     this.defaultContainer = document.createElement('div');
-    this.component = null;
+    this.state = {
+      container: props.container || this.defaultContainer,
+      component: null,
+    };
   }
 
-  renderViewer() {
-    if (this.props.visible || this.component) {
-      if (!this.container) {
-        if (this.props.container) {
-          this.container = this.props.container;
-        }else {
-          this.container = this.defaultContainer;
-          document.body.appendChild(this.container);
-        }
-      }
-      let instance = this;
-      ReactDOM.unstable_renderSubtreeIntoContainer(
-        this,
-        <ViewerCore
-          {...this.props}
-          />,
-        this.container,
-        function () {
-          instance.component = this;
-        },
-      );
+  componentDidMount() {
+    if (!this.props.container) {
+      document.body.appendChild(this.defaultContainer);
     }
   }
 
-  removeViewer() {
-    if (this.container) {
-      const container = this.container;
-      ReactDOM.unmountComponentAtNode(container);
-      container.parentNode.removeChild(container);
-      this.container = null;
-      this.component = null;
+  componentDidUpdate(prevProps: ViewerProps) {
+    // Handle container changes
+    if (this.props.container !== prevProps.container) {
+      if (prevProps.container === null && this.defaultContainer.parentNode) {
+        // Remove default container if we're switching to a provided container
+        document.body.removeChild(this.defaultContainer);
+      } else if (this.props.container === null) {
+        // Add default container if we're switching back to it
+        document.body.appendChild(this.defaultContainer);
+      }
+
+      this.setState({
+        container: this.props.container || this.defaultContainer,
+        component: null,
+      });
     }
   }
 
   componentWillUnmount() {
-    if (this.props.visible &&  this.props.onClose) {
-      this.props.onClose();
+    const { visible, onClose } = this.props;
+    if (visible && onClose) {
+      onClose();
     }
     this.removeViewer();
   }
 
-  componentWillReceiveProps(nextProps: ViewerProps) {
-    if (this.props.container !== nextProps.container) {
-      this.component = null;
-      if (nextProps.container) {
-        if (this.container) {
-          document.body.removeChild(this.container);
-        }
-        this.container = nextProps.container;
-      }else {
-        this.container = this.defaultContainer;
-        document.body.appendChild(this.container);
-      }
+  removeViewer() {
+    if (!this.props.container && this.defaultContainer.parentNode) {
+      document.body.removeChild(this.defaultContainer);
     }
+    this.setState({
+      component: null,
+    });
   }
 
-  componentDidMount() {
-    this.renderViewer();
-  }
-
-  componentDidUpdate() {
-    this.renderViewer();
-  }
+  handlePortalCallback = () => {
+    if (!this.state.component) {
+      this.setState({ component: this });
+    }
+  };
 
   render() {
-    return null;
+    const { visible } = this.props;
+    const { container, component } = this.state;
+
+    if (!visible && !component) {
+      return null;
+    }
+
+    if (!container) {
+      return null;
+    }
+
+    return createPortal(<ViewerCore {...this.props} />, container);
   }
 }
