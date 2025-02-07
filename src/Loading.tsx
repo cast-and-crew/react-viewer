@@ -5,8 +5,8 @@ export interface LoadingProps {
 }
 
 export default class Loading extends React.Component<LoadingProps, any> {
-  constructor() {
-    super();
+  constructor(props: any) {
+    super(props);
   }
 
   render() {

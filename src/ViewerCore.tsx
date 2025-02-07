@@ -87,7 +87,7 @@ export default class ViewerCore extends React.Component<ViewerProps, ViewerCoreS
 
   handleClose = (e) => {
     this.props.onClose();
-  };
+  }
 
   startVisible(activeIndex: number) {
     if (!this.props.container) {
@@ -114,7 +114,7 @@ export default class ViewerCore extends React.Component<ViewerProps, ViewerCoreS
     this.viewCoreContainer.current.addEventListener(
       'transitionend',
       this.handleTransitionEnd,
-      false
+      false,
     );
     this.startVisible(this.state.activeIndex);
   }
@@ -208,7 +208,7 @@ export default class ViewerCore extends React.Component<ViewerProps, ViewerCoreS
     //   this.loadImg(newIndex);
     // }, transitionDuration);
     this.loadImg(newIndex);
-  };
+  }
 
   handleChangeImgState = (width, height, top, left) => {
     this.setState({
@@ -217,7 +217,7 @@ export default class ViewerCore extends React.Component<ViewerProps, ViewerCoreS
       top: top,
       left: left,
     });
-  };
+  }
 
   handleDefaultAction = (type: ActionType) => {
     switch (type) {
@@ -260,7 +260,7 @@ export default class ViewerCore extends React.Component<ViewerProps, ViewerCoreS
       default:
         break;
     }
-  };
+  }
 
   handleAction = (config: ToolbarConfig) => {
     this.handleDefaultAction(config.actionType);
@@ -269,26 +269,26 @@ export default class ViewerCore extends React.Component<ViewerProps, ViewerCoreS
       const activeImage = this.getActiveImage();
       config.onClick(activeImage);
     }
-  };
+  }
 
   handleDownload = () => {
     const activeImage = this.getActiveImage();
     if (activeImage.downloadUrl) {
       location.href = activeImage.downloadUrl;
     }
-  };
+  }
 
   handleScaleX = (newScale: 1 | -1) => {
     this.setState({
       scaleX: this.state.scaleX * newScale,
     });
-  };
+  }
 
   handleScaleY = (newScale: 1 | -1) => {
     this.setState({
       scaleY: this.state.scaleY * newScale,
     });
-  };
+  }
 
   handleZoom = (targetX, targetY, direct, scale) => {
     let imgCenterXY = this.getImageCenterXY();
@@ -305,7 +305,7 @@ export default class ViewerCore extends React.Component<ViewerProps, ViewerCoreS
     if (this.state.width === 0) {
       const [imgWidth, imgHeight] = this.getImgWidthHeight(
         this.state.imageWidth,
-        this.state.imageHeight
+        this.state.imageHeight,
       );
       reset = true;
       left = (this.containerWidth - imgWidth) / 2;
@@ -339,27 +339,27 @@ export default class ViewerCore extends React.Component<ViewerProps, ViewerCoreS
       left: left,
       loading: false,
     });
-  };
+  }
 
   getImageCenterXY = () => {
     return {
       x: this.state.left + this.state.width / 2,
       y: this.state.top + this.state.height / 2,
     };
-  };
+  }
 
   handleRotate = (isRight: boolean = false) => {
     this.setState({
       rotate: this.state.rotate + 90 * (isRight ? 1 : -1),
     });
-  };
+  }
 
   handleResize = () => {
     this.setContainerWidthHeight();
     if (this.props.visible) {
       const [width, height] = this.getImgWidthHeight(
         this.state.imageWidth,
-        this.state.imageHeight
+        this.state.imageHeight,
       );
       let left = (this.containerWidth - width) / 2;
       let top = (this.containerHeight - height - this.footerHeight) / 2;
@@ -373,7 +373,7 @@ export default class ViewerCore extends React.Component<ViewerProps, ViewerCoreS
         scaleY: 1,
       });
     }
-  };
+  }
 
   handleKeydown = (e) => {
     let keyCode = e.keyCode || e.which || e.charCode;
@@ -425,7 +425,7 @@ export default class ViewerCore extends React.Component<ViewerProps, ViewerCoreS
     if (isFeatrue) {
       e.preventDefault();
     }
-  };
+  }
 
   handleTransitionEnd = (e) => {
     if (!this.state.transitionEnd || this.state.visibleStart) {
@@ -434,7 +434,7 @@ export default class ViewerCore extends React.Component<ViewerProps, ViewerCoreS
         transitionEnd: true,
       });
     }
-  };
+  }
 
   bindEvent(remove: boolean = false) {
     let funcName = 'addEventListener';
@@ -449,7 +449,7 @@ export default class ViewerCore extends React.Component<ViewerProps, ViewerCoreS
     this.viewCoreContainer.current.removeEventListener(
       'transitionend',
       this.handleTransitionEnd,
-      false
+      false,
     );
   }
 
@@ -464,7 +464,7 @@ export default class ViewerCore extends React.Component<ViewerProps, ViewerCoreS
         this.containerWidth / 2,
         (this.containerHeight - this.footerHeight) / 2,
         -1,
-        (this.state.scaleX > 0 ? 1 : -1) * this.state.scaleX - 0.11
+        (this.state.scaleX > 0 ? 1 : -1) * this.state.scaleX - 0.11,
       );
       setTimeout(() => {
         document.body.style.overflow = '';
@@ -486,7 +486,7 @@ export default class ViewerCore extends React.Component<ViewerProps, ViewerCoreS
 
   handleCanvasMouseDown = (e) => {
     this.props.onMaskClick(e);
-  };
+  }
 
   getActiveImage = () => {
     let activeImg: ImageDecorator = {
@@ -501,7 +501,7 @@ export default class ViewerCore extends React.Component<ViewerProps, ViewerCoreS
     }
 
     return activeImg;
-  };
+  }
 
   render() {
     let activeImg: ImageDecorator = {

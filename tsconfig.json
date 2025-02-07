@@ -7,13 +7,7 @@
     "removeComments": false,
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
-    "types": [
-      "react",
-      "react-dom",
-      "node"
-    ]
+    "types": ["react", "react-dom", "node"]
   },
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }

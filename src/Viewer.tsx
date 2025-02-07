@@ -5,7 +5,7 @@ import ViewerProps from './ViewerProps';
 
 interface ViewerState {
   container: HTMLElement | null;
-  component: React.ReactNode | null;
+  component: any;
 }
 
 export default class Viewer extends React.Component<ViewerProps, ViewerState> {
@@ -66,7 +66,7 @@ export default class Viewer extends React.Component<ViewerProps, ViewerState> {
     if (!this.state.component) {
       this.setState({ component: this });
     }
-  };
+  }
 
   render() {
     const { visible } = this.props;

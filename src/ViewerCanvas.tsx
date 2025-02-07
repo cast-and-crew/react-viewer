@@ -10,9 +10,19 @@ export interface ViewerCanvasProps {
   top: number;
   left: number;
   rotate: number;
-  onChangeImgState: (width: number, height: number, top: number, left: number) => void;
+  onChangeImgState: (
+    width: number,
+    height: number,
+    top: number,
+    left: number,
+  ) => void;
   onResize: () => void;
-  onZoom: (targetX: number, targetY: number, direct: number, scale: number) => void;
+  onZoom: (
+    targetX: number,
+    targetY: number,
+    direct: number,
+    scale: number,
+  ) => void;
   zIndex: number;
   scaleX: number;
   scaleY: number;
@@ -28,10 +38,12 @@ export interface ViewerCanvasState {
   mouseY?: number;
 }
 
-export default class ViewerCanvas extends React.Component<ViewerCanvasProps, ViewerCanvasState> {
-
-  constructor() {
-    super();
+export default class ViewerCanvas extends React.Component<
+  ViewerCanvasProps,
+  ViewerCanvasState
+> {
+  constructor(props: any) {
+    super(props);
 
     this.state = {
       isMouseDown: false,
@@ -76,7 +88,12 @@ export default class ViewerCanvas extends React.Component<ViewerCanvasProps, Vie
         mouseX: e.clientX,
         mouseY: e.clientY,
       });
-      this.props.onChangeImgState(this.props.width, this.props.height, this.props.top + diffY, this.props.left + diffX);
+      this.props.onChangeImgState(
+        this.props.width,
+        this.props.height,
+        this.props.top + diffY,
+        this.props.left + diffX,
+      );
     }
   }
 
@@ -91,7 +108,7 @@ export default class ViewerCanvas extends React.Component<ViewerCanvasProps, Vie
     let direct: 0 | 1 | -1 = 0;
     if (e.wheelDelta) {
       direct = e.wheelDelta > 0 ? 1 : -1;
-    }else if (e.detail) {
+    } else if (e.detail) {
       direct = e.detail > 0 ? -1 : 1;
     }
     if (direct !== 0) {
@@ -102,7 +119,7 @@ export default class ViewerCanvas extends React.Component<ViewerCanvasProps, Vie
         x -= containerRect.left;
         y -= containerRect.top;
       }
-      this.props.onZoom(x, y, direct, .05);
+      this.props.onZoom(x, y, direct, 0.05);
     }
   }
 
@@ -155,8 +172,12 @@ export default class ViewerCanvas extends React.Component<ViewerCanvasProps, Vie
     let imgStyle: React.CSSProperties = {
       width: `${this.props.width}px`,
       height: `${this.props.height}px`,
-      transform: `translateX(${this.props.left ? this.props.left + 'px' : 'aoto'}) translateY(${this.props.top}px)
-      rotate(${this.props.rotate}deg) scaleX(${this.props.scaleX}) scaleY(${this.props.scaleY})`,
+      transform: `translateX(${
+        this.props.left ? this.props.left + 'px' : 'aoto'
+      }) translateY(${this.props.top}px)
+      rotate(${this.props.rotate}deg) scaleX(${this.props.scaleX}) scaleY(${
+        this.props.scaleY
+      })`,
     };
 
     let imgClass = this.props.drag ? 'drag' : '';
@@ -170,12 +191,14 @@ export default class ViewerCanvas extends React.Component<ViewerCanvasProps, Vie
 
     let imgNode = null;
     if (this.props.imgSrc !== '') {
-      imgNode = <img
-      className={imgClass}
-      src={this.props.imgSrc}
-      style={imgStyle}
-      onMouseDown={this.handleMouseDown}
-      />;
+      imgNode = (
+        <img
+          className={imgClass}
+          src={this.props.imgSrc}
+          style={imgStyle}
+          onMouseDown={this.handleMouseDown}
+        />
+      );
     }
     if (this.props.loading) {
       imgNode = (
@@ -187,16 +210,16 @@ export default class ViewerCanvas extends React.Component<ViewerCanvasProps, Vie
             alignItems: 'center',
           }}
         >
-          <Loading/>
+          <Loading />
         </div>
       );
     }
 
     return (
       <div
-      className={`${this.props.prefixCls}-canvas`}
-      onMouseDown={this.handleCanvasMouseDown}
-      style={style}
+        className={`${this.props.prefixCls}-canvas`}
+        onMouseDown={this.handleCanvasMouseDown}
+        style={style}
       >
         {imgNode}
       </div>

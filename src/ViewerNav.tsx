@@ -36,7 +36,7 @@ export default class ViewerNav extends React.Component<ViewerNavProps, any> {
             onClick={() => { this.handleChangeImg(index); }}
             >
               <img src={item.src} alt={item.alt} />
-            </li>
+            </li>,
             )
           }
         </ul>
