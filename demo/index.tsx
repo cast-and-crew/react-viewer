@@ -36,14 +36,14 @@ class App extends React.Component<any, Partial<State>> {
     this.setState({
       mode: "modal",
     });
-  };
+  }
 
   handleChangeInline = (e) => {
     this.setState({
       mode: "inline",
       visible: true,
     });
-  };
+  }
 
   render() {
     let images = [

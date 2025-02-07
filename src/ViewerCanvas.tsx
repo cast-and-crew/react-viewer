@@ -1,5 +1,5 @@
-import * as React from "react";
-import Loading from "./Loading";
+import * as React from 'react';
+import Loading from './Loading';
 
 export interface ViewerCanvasProps {
   prefixCls: string;
@@ -14,14 +14,14 @@ export interface ViewerCanvasProps {
     width: number,
     height: number,
     top: number,
-    left: number
+    left: number,
   ) => void;
   onResize: () => void;
   onZoom: (
     targetX: number,
     targetY: number,
     direct: number,
-    scale: number
+    scale: number,
   ) => void;
   zIndex: number;
   scaleX: number;
@@ -60,12 +60,12 @@ export default class ViewerCanvas extends React.Component<
 
   handleResize = (e) => {
     this.props.onResize();
-  };
+  }
 
   handleCanvasMouseDown = (e) => {
     this.props.onCanvasMouseDown(e);
     this.handleMouseDown(e);
-  };
+  }
 
   handleMouseDown = (e) => {
     if (!this.props.visible || !this.props.drag) {
@@ -78,7 +78,7 @@ export default class ViewerCanvas extends React.Component<
       mouseX: e.nativeEvent.clientX,
       mouseY: e.nativeEvent.clientY,
     });
-  };
+  }
 
   handleMouseMove = (e) => {
     if (this.state.isMouseDown) {
@@ -92,16 +92,16 @@ export default class ViewerCanvas extends React.Component<
         this.props.width,
         this.props.height,
         this.props.top + diffY,
-        this.props.left + diffX
+        this.props.left + diffX,
       );
     }
-  };
+  }
 
   handleMouseUp = (e) => {
     this.setState({
       isMouseDown: false,
     });
-  };
+  }
 
   handleMouseScroll = (e) => {
     e.preventDefault();
@@ -121,12 +121,12 @@ export default class ViewerCanvas extends React.Component<
       }
       this.props.onZoom(x, y, direct, 0.05);
     }
-  };
+  }
 
   bindEvent = (remove?: boolean) => {
-    let funcName = "addEventListener";
+    let funcName = 'addEventListener';
     if (remove) {
-      funcName = "removeEventListener";
+      funcName = 'removeEventListener';
     }
 
     let mouseScrollArea: Document | HTMLElement = document;
@@ -135,12 +135,12 @@ export default class ViewerCanvas extends React.Component<
       mouseScrollArea = this.props.container;
     }
 
-    mouseScrollArea[funcName]("DOMMouseScroll", this.handleMouseScroll, false);
-    mouseScrollArea[funcName]("mousewheel", this.handleMouseScroll, false);
-    document[funcName]("click", this.handleMouseUp, false);
-    document[funcName]("mousemove", this.handleMouseMove, false);
-    window[funcName]("resize", this.handleResize, false);
-  };
+    mouseScrollArea[funcName]('DOMMouseScroll', this.handleMouseScroll, false);
+    mouseScrollArea[funcName]('mousewheel', this.handleMouseScroll, false);
+    document[funcName]('click', this.handleMouseUp, false);
+    document[funcName]('mousemove', this.handleMouseMove, false);
+    window[funcName]('resize', this.handleResize, false);
+  }
 
   componentWillReceiveProps(nextProps: ViewerCanvasProps) {
     if (!this.props.visible && nextProps.visible) {
@@ -173,14 +173,14 @@ export default class ViewerCanvas extends React.Component<
       width: `${this.props.width}px`,
       height: `${this.props.height}px`,
       transform: `translateX(${
-        this.props.left ? this.props.left + "px" : "aoto"
+        this.props.left ? this.props.left + 'px' : 'aoto'
       }) translateY(${this.props.top}px)
       rotate(${this.props.rotate}deg) scaleX(${this.props.scaleX}) scaleY(${
         this.props.scaleY
       })`,
     };
 
-    let imgClass = this.props.drag ? "drag" : "";
+    let imgClass = this.props.drag ? 'drag' : '';
     if (!this.state.isMouseDown) {
       imgClass += ` ${this.props.prefixCls}-image-transition`;
     }
@@ -190,7 +190,7 @@ export default class ViewerCanvas extends React.Component<
     };
 
     let imgNode = null;
-    if (this.props.imgSrc !== "") {
+    if (this.props.imgSrc !== '') {
       imgNode = (
         <img
           className={imgClass}
@@ -204,10 +204,10 @@ export default class ViewerCanvas extends React.Component<
       imgNode = (
         <div
           style={{
-            display: "flex",
-            height: "100%",
-            justifyContent: "center",
-            alignItems: "center",
+            display: 'flex',
+            height: '100%',
+            justifyContent: 'center',
+            alignItems: 'center',
           }}
         >
           <Loading />

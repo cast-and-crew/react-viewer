@@ -51,7 +51,6 @@ config.module
   .loader("ts-loader")
   .options({
     configFile: path.join(__dirname, "tsconfig.json"),
-    // transpileOnly: true,
   });
 
 config.module
@@ -60,9 +59,6 @@ config.module
   .use("style-loader")
   .loader("style-loader")
   .end()
-  // .use('MiniCssExtractPlugin.loader')
-  //   .loader(MiniCssExtractPlugin.loader)
-  //   .end()
   .use("css-loader")
   .loader("css-loader")
   .options({
@@ -137,8 +133,5 @@ config.resolve.extensions
   .merge([".tsx", ".ts", ".js"])
   .end()
   .modules.add(path.join(__dirname, "node_modules"));
-
-// config.plugin('MiniCssExtractPlugin')
-//   .use(MiniCssExtractPlugin)
 
 module.exports = config;

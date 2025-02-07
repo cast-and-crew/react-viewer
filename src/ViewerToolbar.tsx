@@ -1,6 +1,6 @@
-import * as React from "react";
-import Icon, { ActionType } from "./Icon";
-import { ToolbarConfig } from "./ViewerProps";
+import * as React from 'react';
+import Icon, { ActionType } from './Icon';
+import { ToolbarConfig } from './ViewerProps';
 
 export interface ViewerToolbarProps {
   prefixCls: string;
@@ -20,43 +20,43 @@ export interface ViewerToolbarProps {
 
 export const defaultToolbars: ToolbarConfig[] = [
   {
-    key: "zoomIn",
+    key: 'zoomIn',
     actionType: ActionType.zoomIn,
   },
   {
-    key: "zoomOut",
+    key: 'zoomOut',
     actionType: ActionType.zoomOut,
   },
   {
-    key: "prev",
+    key: 'prev',
     actionType: ActionType.prev,
   },
   {
-    key: "reset",
+    key: 'reset',
     actionType: ActionType.reset,
   },
   {
-    key: "next",
+    key: 'next',
     actionType: ActionType.next,
   },
   {
-    key: "rotateLeft",
+    key: 'rotateLeft',
     actionType: ActionType.rotateLeft,
   },
   {
-    key: "rotateRight",
+    key: 'rotateRight',
     actionType: ActionType.rotateRight,
   },
   {
-    key: "scaleX",
+    key: 'scaleX',
     actionType: ActionType.scaleX,
   },
   {
-    key: "scaleY",
+    key: 'scaleY',
     actionType: ActionType.scaleY,
   },
   {
-    key: "download",
+    key: 'download',
     actionType: ActionType.download,
   },
 ];
@@ -82,7 +82,7 @@ export default class ViewerToolbar extends React.Component<
   renderAction = (config: ToolbarConfig) => {
     let content = null;
     // default toolbar
-    if (typeof ActionType[config.actionType] !== "undefined") {
+    if (typeof ActionType[config.actionType] !== 'undefined') {
       content = <Icon type={config.actionType} />;
     }
     // extra toolbar
@@ -100,7 +100,7 @@ export default class ViewerToolbar extends React.Component<
         {content}
       </li>
     );
-  };
+  }
 
   render() {
     let attributeNode = this.props.attribute ? (
@@ -112,19 +112,19 @@ export default class ViewerToolbar extends React.Component<
     ) : null;
     let toolbars = this.props.toolbars;
     if (!this.props.zoomable) {
-      toolbars = deleteToolbarFromKey(toolbars, ["zoomIn", "zoomOut"]);
+      toolbars = deleteToolbarFromKey(toolbars, ['zoomIn', 'zoomOut']);
     }
     if (!this.props.changeable) {
-      toolbars = deleteToolbarFromKey(toolbars, ["prev", "next"]);
+      toolbars = deleteToolbarFromKey(toolbars, ['prev', 'next']);
     }
     if (!this.props.rotatable) {
-      toolbars = deleteToolbarFromKey(toolbars, ["rotateLeft", "rotateRight"]);
+      toolbars = deleteToolbarFromKey(toolbars, ['rotateLeft', 'rotateRight']);
     }
     if (!this.props.scalable) {
-      toolbars = deleteToolbarFromKey(toolbars, ["scaleX", "scaleY"]);
+      toolbars = deleteToolbarFromKey(toolbars, ['scaleX', 'scaleY']);
     }
     if (!this.props.downloadable) {
-      toolbars = deleteToolbarFromKey(toolbars, ["download"]);
+      toolbars = deleteToolbarFromKey(toolbars, ['download']);
     }
     return (
       <div>
