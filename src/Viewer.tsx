@@ -1,11 +1,11 @@
-import * as React from 'react';
-import { createPortal } from 'react-dom';
-import ViewerCore from './ViewerCore';
-import ViewerProps from './ViewerProps';
+import * as React from "react";
+import { createPortal } from "react-dom";
+import ViewerCore from "./ViewerCore";
+import ViewerProps from "./ViewerProps";
 
 interface ViewerState {
   container: HTMLElement | null;
-  component: React.ReactNode | null;
+  component: any;
 }
 
 export default class Viewer extends React.Component<ViewerProps, ViewerState> {
@@ -14,7 +14,7 @@ export default class Viewer extends React.Component<ViewerProps, ViewerState> {
   constructor(props: ViewerProps) {
     super(props);
 
-    this.defaultContainer = document.createElement('div');
+    this.defaultContainer = document.createElement("div");
     this.state = {
       container: props.container || this.defaultContainer,
       component: null,

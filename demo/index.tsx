@@ -1,20 +1,20 @@
-import * as React from 'react';
-import { createRoot } from 'react-dom/client';
-import Viewer from '../src/Viewer';
-const img2 = require('./images/landscape2.jpg');
-const img = require('./images/landscape.jpg');
-const img3 = require('./images/tibet-6.jpg');
-const img4 = require('./images/image4.jpg');
-const forkImg = require('./images/fork_me_ribbon.svg');
-import './index.less';
-import classNames from 'classnames';
-import { Row, Col, Button } from 'antd';
+import * as React from "react";
+import { createRoot } from "react-dom/client";
+import Viewer from "../src/Viewer";
+const img2 = require("./images/landscape2.jpg");
+const img = require("./images/landscape.jpg");
+const img3 = require("./images/tibet-6.jpg");
+const img4 = require("./images/image4.jpg");
+const forkImg = require("./images/fork_me_ribbon.svg");
+import "./index.less";
+import classNames from "classnames";
+import { Row, Col, Button } from "antd";
 const ButtonGroup = Button.Group;
 
 interface State {
   visible: boolean;
   activeIndex: number;
-  mode: 'modal' | 'inline';
+  mode: "modal" | "inline";
 }
 
 const root = createRoot(document.getElementById("root"));
@@ -22,55 +22,60 @@ const root = createRoot(document.getElementById("root"));
 class App extends React.Component<any, Partial<State>> {
   container: HTMLDivElement;
 
-  constructor() {
-    super();
+  constructor(props: any) {
+    super(props);
 
     this.state = {
       visible: false,
       activeIndex: 0,
-      mode: 'modal',
+      mode: "modal",
     };
   }
 
   handleChangeModal = (e) => {
     this.setState({
-      mode: 'modal',
+      mode: "modal",
     });
-  }
+  };
 
   handleChangeInline = (e) => {
     this.setState({
-      mode: 'inline',
+      mode: "inline",
       visible: true,
     });
-  }
+  };
 
   render() {
-    let images = [{
-      src: img,
-      alt: 'lake',
-      downloadUrl: '',
-    }, {
-      src: img2,
-      alt: 'mountain',
-      downloadUrl: '',
-    }, {
-      src: img3,
-      alt: '',
-      downloadUrl: '',
-    }, {
-      src: img4,
-      alt: '',
-      downloadUrl: '',
-    }];
+    let images = [
+      {
+        src: img,
+        alt: "lake",
+        downloadUrl: "",
+      },
+      {
+        src: img2,
+        alt: "mountain",
+        downloadUrl: "",
+      },
+      {
+        src: img3,
+        alt: "",
+        downloadUrl: "",
+      },
+      {
+        src: img4,
+        alt: "",
+        downloadUrl: "",
+      },
+    ];
 
-    let inline = this.state.mode === 'inline';
+    let inline = this.state.mode === "inline";
 
-    let inlineContainerClass = classNames('inline-container', {
+    let inlineContainerClass = classNames("inline-container", {
       show: this.state.visible && inline,
     });
 
-    let imgListClass = classNames('img-list', {
+    let imgListClass = classNames("img-list", {
       hide: this.state.visible && inline,
     });
 
@@ -94,16 +99,16 @@ class App extends React.Component<any, Partial<State>> {
               <div className="options-list">
                 <ButtonGroup>
                   <Button
-                    type={inline ? null : 'primary'}
+                    type={inline ? null : "primary"}
                     onClick={this.handleChangeModal}
                   >
-                      Modal mode
+                    Modal mode
                   </Button>
                   <Button
-                    type={inline ? 'primary' : null}
+                    type={inline ? "primary" : null}
                     onClick={this.handleChangeInline}
                   >
-                      Inline mode
+                    Inline mode
                   </Button>
                 </ButtonGroup>
               </div>
@@ -113,40 +118,54 @@ class App extends React.Component<any, Partial<State>> {
                 {images.map((item, index) => {
                   return (
                     <div key={index.toString()} className="img-item">
-                      <img src={item.src} onClick={() => {
-                        this.setState({
-                          visible: true,
-                          activeIndex: index,
-                        });
-                      }}/>
+                      <img
+                        src={item.src}
+                        onClick={() => {
+                          this.setState({
+                            visible: true,
+                            activeIndex: index,
+                          });
+                        }}
+                      />
                     </div>
                   );
                 })}
               </div>
-              <div className={inlineContainerClass} ref={ref => {this.container = ref;}}></div>
+              <div
+                className={inlineContainerClass}
+                ref={(ref) => {
+                  this.container = ref;
+                }}
+              ></div>
             </Col>
           </Row>
           <Viewer
-          visible={this.state.visible}
-          onClose={() => { this.setState({ visible: false }); } }
-          images={images}
-          activeIndex={this.state.activeIndex}
-          container={inline ? this.container : null}
-          downloadable
-          customToolbar={(toolbars) => {
-            return toolbars.concat([{
-              key: 'test',
-              render: <div>C</div>,
-              onClick: (activeImage) => {
-                console.log(activeImage);
-              },
-            }]);
-          }}
+            visible={this.state.visible}
+            onClose={() => {
+              this.setState({ visible: false });
+            }}
+            images={images}
+            activeIndex={this.state.activeIndex}
+            container={inline ? this.container : null}
+            downloadable
+            customToolbar={(toolbars) => {
+              return toolbars.concat([
+                {
+                  key: "test",
+                  render: <div>C</div>,
+                  onClick: (activeImage) => {
+                    console.log(activeImage);
+                  },
+                },
+              ]);
+            }}
           />
         </div>
         <div className="footer">
           <div className="container-fluid container-footer">
-            <a href="https://github.com/infeng" className="signature">@infeng</a>
+            <a href="https://github.com/infeng" className="signature">
+              @infeng
+            </a>
           </div>
         </div>
       </div>
